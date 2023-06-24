@@ -2,14 +2,29 @@ package com.infy.rentacar.dto;
 
 import java.time.LocalDate;
 
+import javax.validation.constraints.FutureOrPresent;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+
 import com.infy.rentacar.entity.Rental;
 
 public class RentalDTO {
 
 	private Integer rentalId;
+	@NotNull(message = "rental.cartype.absent")
+	@Pattern(regexp = "(Automatic|Electric|Manual)", message="{rental.cartype.invalid}")
 	private String carType;
+	@NotNull(message = "{rental.bookingdate.absent}")
+	@FutureOrPresent( message="{rental.bookingdate.invalid}")
 	private LocalDate bookingStartDate;
+	@NotNull(message="{rental.duration.absent}")
+	@Min(value = 1, message = "{rental.duration.invalid}")
+	@Max(value = 30, message = "{rental.duration.invalid}")
 	private Integer duration;
+	@NotNull(message = "{rental.customername.absent}")
+	@Pattern(regexp = "[A-Z][a-z]+(//s[A-Z][a-z]+)*", message="{rental.customername.invalid}")
 	private String customerName;
 	private Long mobileNumber;
 	public Integer getRentalId() {
